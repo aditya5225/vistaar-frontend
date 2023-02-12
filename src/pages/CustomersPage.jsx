@@ -10,17 +10,19 @@ import { fetchCustomersData } from '../store/manageCustomersState'
 
 const CustomersPage = () => {
     const customersData = useSelector(state => state.manageCustomersState.customersData);
-    const dataCount = useSelector(state => state.manageCustomersState.dataCount);
+    // const dataCount = useSelector(state => state.manageCustomersState.dataCount);
+    const dataCount = 410
+    const numberOfTabs = 10;
 
     const [limitData, setLimitData] = useState(10)
     const [pageNumber, setPageNumber] = useState(1)
+    const [currentSeries, setCurrentSeries] = useState(1)
     const dispatch = useDispatch();
-    console.log(pageNumber)
 
-    let limitPage = dataCount > 10 ? 10 : dataCount;
-    let skipTab = 2;
-    let startPage = 0;
-    let endPage = limitPage;
+    const totalSkippedData = (currentSeries - 1) * numberOfTabs
+    let limitPage = (dataCount - totalSkippedData) / 10 > numberOfTabs ? numberOfTabs : (dataCount - totalSkippedData) / 10;
+
+    console.log((dataCount - totalSkippedData) / 10)
 
     useEffect(() => {
         const queryData = `limit=${limitData}&skip=${pageNumber}`;
@@ -69,8 +71,10 @@ const CustomersPage = () => {
                     <Pagination>
                         <PaginationItem
                             onClick={() => {
-                                if (pageNumber > 1) {
-                                    setPageNumber(pageNumber - 1)
+                                let currentSrc = currentSeries - limitData;
+                                if (currentSrc >= 0) {
+                                    setCurrentSeries(currentSrc)
+                                    setPageNumber(currentSrc)
                                 }
                             }}
                         >
@@ -81,20 +85,22 @@ const CustomersPage = () => {
                                 return (
                                     <PaginationItem
                                         key={ind}
-                                        active={pageNumber == ind + 1 ? true : false}
+                                        active={pageNumber == currentSeries + ind ? true : false}
                                         onClick={() => {
-                                            setPageNumber(ind + 1)
+                                            setPageNumber(currentSeries + ind)
                                         }}
                                     >
-                                        <PaginationLink> {ind + 1} </PaginationLink>
+                                        <PaginationLink> {currentSeries + ind} </PaginationLink>
                                     </PaginationItem>
                                 )
                             })
                         }
                         <PaginationItem
                             onClick={() => {
-                                if (pageNumber < limitPage) {
-                                    setPageNumber(pageNumber + 1)
+                                let currentSrc = currentSeries + limitData;
+                                if (currentSrc < (dataCount / limitData)) {
+                                    setCurrentSeries(currentSrc)
+                                    setPageNumber(currentSrc)
                                 }
                             }}
                         >
