@@ -12,30 +12,33 @@ const CustomPagination = (props) => {
         pageNumber,
         setPageNumber,
         numberOfTabs = 10,
+        loading = false,
     } = props
 
     const [currentSeries, setCurrentSeries] = useState(1)
 
-    const totalSkippedData = (currentSeries - 1) * numberOfTabs
-    let limitPage = Math.round((totalDataCount - totalSkippedData) / numberOfTabs > numberOfTabs ? numberOfTabs : (totalDataCount - totalSkippedData) / numberOfTabs);
+    const totalSkippedData = (currentSeries - 1) * limitData
+    let limitPage = Math.ceil((totalDataCount - totalSkippedData) / numberOfTabs > numberOfTabs ? numberOfTabs : (totalDataCount - totalSkippedData) / limitData);
 
     return (
         <>
             {
-                pageNumber && setPageNumber && limitPage > 0 ?
+                pageNumber && setPageNumber && limitData < totalDataCount ?
                     <Pagination>
                         <PaginationItem
                             onClick={() => {
-                                if (totalDataCount > (numberOfTabs * numberOfTabs)) {
-                                    let currentSrc = currentSeries - limitData;
-                                    if (currentSrc >= 0) {
-                                        setCurrentSeries(currentSrc)
-                                        setPageNumber(currentSrc)
+                                if (!loading) {
+                                    if (totalDataCount > (numberOfTabs * numberOfTabs)) {
+                                        let currentSrc = currentSeries - numberOfTabs;
+                                        if (currentSrc >= 0) {
+                                            setCurrentSeries(currentSrc)
+                                            setPageNumber(currentSrc)
+                                        }
                                     }
-                                }
-                                else {
-                                    if (pageNumber > 1) {
-                                        setPageNumber(pageNumber - 1)
+                                    else {
+                                        if (pageNumber > 1) {
+                                            setPageNumber(pageNumber - 1)
+                                        }
                                     }
                                 }
                             }}
@@ -49,7 +52,9 @@ const CustomPagination = (props) => {
                                         key={ind}
                                         active={pageNumber == currentSeries + ind ? true : false}
                                         onClick={() => {
-                                            setPageNumber(currentSeries + ind)
+                                            if (!loading) {
+                                                setPageNumber(currentSeries + ind)
+                                            }
                                         }}
                                     >
                                         <PaginationLink> {currentSeries + ind} </PaginationLink>
@@ -59,16 +64,18 @@ const CustomPagination = (props) => {
                         }
                         <PaginationItem
                             onClick={() => {
-                                if (totalDataCount > (numberOfTabs * numberOfTabs)) {
-                                    let currentSrc = currentSeries + limitData;
-                                    if (currentSrc <= (totalDataCount / limitData)) {
-                                        setCurrentSeries(currentSrc)
-                                        setPageNumber(currentSrc)
+                                if (!loading) {
+                                    if (totalDataCount > (numberOfTabs * numberOfTabs)) {
+                                        let currentSrc = currentSeries + numberOfTabs;
+                                        if (currentSrc <= (totalDataCount / limitData)) {
+                                            setCurrentSeries(currentSrc)
+                                            setPageNumber(currentSrc)
+                                        }
                                     }
-                                }
-                                else {
-                                    if (pageNumber < limitPage) {
-                                        setPageNumber(pageNumber + 1)
+                                    else {
+                                        if (pageNumber < limitPage) {
+                                            setPageNumber(pageNumber + 1)
+                                        }
                                     }
                                 }
                             }}

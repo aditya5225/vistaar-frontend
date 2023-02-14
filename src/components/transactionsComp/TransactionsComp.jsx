@@ -123,6 +123,7 @@ const TransactionsComp = (props) => {
                                                     pageNumber={pageNumber}
                                                     setPageNumber={setPageNumber}
                                                     numberOfTabs={numberOfTabs}
+                                                    loading={loading}
                                                 />
                                             </div>
                                             : <div className='mt-5 text-center' >

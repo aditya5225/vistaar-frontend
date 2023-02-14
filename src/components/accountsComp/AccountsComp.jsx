@@ -13,7 +13,6 @@ const AccountsComp = (props) => {
     const accountsData = useSelector(state => state.manageAccountsState.accountsData);
     const dataCount = useSelector(state => state.manageAccountsState.dataCount);
 
-
     const numberOfTabs = 10;
 
     const [limitData, setLimitData] = useState(24)
@@ -71,6 +70,7 @@ const AccountsComp = (props) => {
                 pageNumber={pageNumber}
                 setPageNumber={setPageNumber}
                 numberOfTabs={numberOfTabs}
+                loading={loading}
             />
         </>
     )

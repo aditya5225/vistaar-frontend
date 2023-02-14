@@ -92,6 +92,7 @@ const CustomersComp = () => {
                 pageNumber={pageNumber}
                 setPageNumber={setPageNumber}
                 numberOfTabs={numberOfTabs}
+                loading={loading}
             />
         </div>
     )
