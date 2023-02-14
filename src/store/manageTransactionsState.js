@@ -10,6 +10,7 @@ export const manageTransactionsState = createSlice({
         errorMsg: null,
         successMsg: null,
         transactionsData: null,
+        customerData: null,
     },
 
     reducers: {
@@ -37,7 +38,8 @@ export const manageTransactionsState = createSlice({
                 loading: false,
                 error: false,
                 successMsg: action.payload.message,
-                transactionsData: action.payload.data,
+                transactionsData: action.payload.data.transactionsData,
+                customerData: action.payload.data.customerData,
             }
         },
     },
@@ -52,7 +54,7 @@ export const fetchTransactionsData = (queryData) => dispatch => {
     HTTPClient.get(apiList.fetchTransactions, queryData, (response) => {
         if (response) {
             if (!response.error) {
-                dispatch(successTransactionsStateData({ message: response.message, data: response.result.transactionsData }));
+                dispatch(successTransactionsStateData({ message: response.message, data: response.result }));
             } else {
                 dispatch(failedTransactionsStateData({ message: response.message }));
             }

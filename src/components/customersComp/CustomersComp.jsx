@@ -19,8 +19,7 @@ const CustomersComp = () => {
 
 
     useEffect(() => {
-        // const queryData = `limit=${limitData}&skip=${pageNumber}&active=true`;
-        const queryData = `limit=${limitData}&skip=${pageNumber}`;
+        const queryData = `limit=${limitData}&skip=${pageNumber}&active=true`;
         dispatch(fetchCustomersData(queryData))
     }, [limitData, pageNumber])
 
@@ -29,7 +28,7 @@ const CustomersComp = () => {
             {
                 loading ? <div
                     style={{
-                        height: '100vh',
+                        height: '70vh',
                         width: '100vw',
                         display: 'flex',
                         alignItems: 'center',
@@ -68,10 +67,7 @@ const CustomersComp = () => {
                                                                 <Link
                                                                     key={acntInd}
                                                                     to={`/transactions`}
-                                                                    state={{
-                                                                        customerDets: cstmVal,
-                                                                        accountNo: acntVal
-                                                                    }}
+                                                                    state={{ accountNo: acntVal }}
                                                                 >
                                                                     <span
                                                                         className='mx-1'

@@ -3,12 +3,13 @@ import {
     useLocation,
     useNavigate,
     useParams,
+    Link,
+    Navigate,
 } from "react-router-dom";
 import { Table } from 'reactstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTransactionsData } from '../../store/manageTransactionsState';
 import moment from 'moment';
-import { Link } from "react-router-dom";
 import CustomPagination from '../../container/customComponent/CustomPagination';
 
 
@@ -16,6 +17,7 @@ const TransactionsComp = (props) => {
 
     const loading = useSelector(state => state.manageTransactionsState.loading);
     const transactionsData = useSelector(state => state.manageTransactionsState.transactionsData);
+    const customerData = useSelector(state => state.manageTransactionsState.customerData);
 
     const numberOfTabs = 10;
 
@@ -38,12 +40,12 @@ const TransactionsComp = (props) => {
     return (
         <>
             {
-                location.state && location.state.customerDets && location.state.accountNo ?
+                location && location.state && location.state.accountNo ?
                     <div>
                         {
                             loading ? <div
                                 style={{
-                                    height: '100vh',
+                                    height: '70vh',
                                     width: '100vw',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -55,17 +57,25 @@ const TransactionsComp = (props) => {
                                 : <div>
                                     <div className='border bg-light py-3 px-4'>
                                         <div className='d-flex justify-content-between align-items-center'>
-                                            <Link to={`/customers`} className='text-decoration-none'> <h6> {`<Back`} </h6> </Link>
+                                            <h6
+                                                onClick={() => navigate(-1)}
+                                                className='text-primary'
+                                                style={{ cursor: 'pointer' }}
+                                            > {`<Back`} </h6>
                                             <h5> Transactions </h5>
                                             <h6> Account Number: <b> {location.state.accountNo} </b> </h6>
                                         </div>
-                                        <div>
-                                            <p> Name: {location.state.customerDets.name} </p>
-                                            <p> Username: {location.state.customerDets.username} </p>
-                                            <p> Email: {location.state.customerDets.email} </p>
-                                            <p> Address: {location.state.customerDets.address} </p>
-                                            <p> Date of birth: {moment(location.state.customerDets.birthdate).format('DD-MM-YYYY')} </p>
-                                        </div>
+                                        {
+                                            customerData ?
+                                                <div>
+                                                    <p> Name: {customerData.name} </p>
+                                                    <p> Username: {customerData.username} </p>
+                                                    <p> Email: {customerData.email} </p>
+                                                    <p> Address: {customerData.address} </p>
+                                                    <p> Date of birth: {moment(customerData.birthdate).format('DD-MM-YYYY')} </p>
+                                                </div>
+                                                : null
+                                        }
                                     </div>
                                     {
                                         transactionsData ?
@@ -122,7 +132,7 @@ const TransactionsComp = (props) => {
                                 </div>
                         }
                     </div>
-                    : <> {navigate("/customers")} </>
+                    : <> <Navigate to="/" replace /> </>
             }
         </>
     )

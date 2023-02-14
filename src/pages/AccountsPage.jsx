@@ -1,15 +1,15 @@
 import React from 'react';
-import CustomersComp from '../components/customersComp/CustomersComp'
+import AccountsComp from '../components/accountsComp/AccountsComp'
 import NavBarHeader from '../container/navBar/NavBarHeader'
 
-const CustomersPage = () => {
+const AccountsPage = () => {
 
     return (
         <>
             <NavBarHeader />
-            <CustomersComp />
+            <AccountsComp />
         </>
     )
 }
 
-export default CustomersPage;
+export default AccountsPage;
