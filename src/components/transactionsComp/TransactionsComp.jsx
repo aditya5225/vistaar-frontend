@@ -23,6 +23,8 @@ const TransactionsComp = (props) => {
 
     const [limitData, setLimitData] = useState(10)
     const [pageNumber, setPageNumber] = useState(1)
+    
+    console.log(pageNumber)
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -103,7 +105,7 @@ const TransactionsComp = (props) => {
                                                             transactionsData.transactions && transactionsData.transactions.slice(((pageNumber - 1) * limitData), ((pageNumber - 1) * limitData) + 10).map((trnsVal, trnsInd) => {
                                                                 return (
                                                                     <tr key={trnsVal._id}>
-                                                                        <td> {trnsInd + 1} </td>
+                                                                        <td> {((pageNumber - 1) * limitData) + (trnsInd + 1)} </td>
                                                                         <td> {moment(trnsVal.name).format('DD-MM-YYYY')} </td>
                                                                         <td> {trnsVal.transaction_code.toUpperCase()} </td>
                                                                         <td> {trnsVal.symbol} </td>

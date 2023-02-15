@@ -57,7 +57,7 @@ const CustomersComp = () => {
                                     customersData.map((cstmVal, cstmInd) => {
                                         return (
                                             <tr key={cstmVal._id}>
-                                                <td> {cstmInd + 1} </td>
+                                                <td> {((pageNumber - 1) * limitData) + (cstmInd + 1)} </td>
                                                 <td> {cstmVal.name} </td>
                                                 <td> {cstmVal.address} </td>
                                                 <td>
