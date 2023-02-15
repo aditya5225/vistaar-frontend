@@ -24,8 +24,6 @@ const TransactionsComp = (props) => {
     const [limitData, setLimitData] = useState(10)
     const [pageNumber, setPageNumber] = useState(1)
     
-    console.log(pageNumber)
-
     const location = useLocation();
     const navigate = useNavigate();
     const params = useParams();
